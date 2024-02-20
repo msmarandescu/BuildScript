@@ -8,7 +8,7 @@ echo "Compilation started:"
 exitCode=$?
 for f in $(find -type f -name "*.cpp")
 do 
-    $(g++ -Wall -g -c $f -o "out/obj/$(basename -- ${f%.*}.o)")
+    $(g++ -Wall -std=c++17 -g -c $f -o "out/obj/$(basename -- ${f%.*}.o)")
     exitCode=$?
     echo "  $f"
     if [ $exitCode -gt 0 ]
@@ -31,7 +31,7 @@ else
         obj="$obj out/obj/$o"
         echo "  Linking file: "$o
     done
-    $(g++ -o out/main.exe $obj)
+    $(g++ -Xlinker -Map=output.map  $obj -o out/main.exe -lpthread)
     echo "Linking end!"
     echo "Project build successful!"
 
